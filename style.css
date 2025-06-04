@@ -1,0 +1,1224 @@
+:root {
+    --primary-color: #242f65;
+    --secondary-color: #4a6bdf;
+    --gold: #c28942;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'font', sans-serif;
+}
+
+@font-face {
+    font-family: 'font';
+    src: url('Bahij_TheSansArabic-Bold.ttf');
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header .subtitle {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.preview-section {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+canvas {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+}
+
+
+.controls {
+    background-color: white;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+input {
+    padding: 15px;
+    font-size: 18px;
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    text-align: right;
+}
+
+input:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.download-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.download-btn:hover {
+    background-color: #1a2450;
+    transform: translateY(-2px);
+}
+
+.share-btn {
+    background-color: var(--gold);
+    color: white;
+}
+
+.share-btn:hover {
+    background-color: #e05555;
+    transform: translateY(-2px);
+}
+
+footer {
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* أنماط قسم التواصل المحدثة */
+.contact-section {
+    background-color: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 40px;
+    text-align: center;
+}
+
+.contact-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.contact-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.contact-container {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.company-info,
+.contact-form {
+    flex: 1;
+    padding: 20px;
+}
+
+.company-info {
+    background-color: #f9f9ff;
+    border-radius: var(--border-radius);
+    border: 1px solid #eee;
+}
+
+.company-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-method {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.contact-method i {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+
+.contact-label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.contact-value {
+    color: var(--dark-color);
+    text-decoration: none;
+    display: block;
+    margin-top: 5px;
+    transition: color 0.3s;
+}
+
+.contact-value:hover {
+    color: var(--secondary-color);
+}
+
+.contact-section p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+}
+
+.contact-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.contact-btn:hover {
+    background-color: #3a5bd9;
+}
+
+/* تحسينات للجوال */
+@media (max-width: 768px) {
+
+    .contact-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .company-info,
+    .contact-form {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .contact-section {
+        padding: 25px 15px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* أنماط قسم التواصل المحسنة */
+.contact-section {
+    position: relative;
+    background-color: white;
+    padding: 60px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 60px;
+    text-align: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.contact-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.contact-pattern {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%234a6bdf20"><circle cx="25" cy="25" r="5"/><circle cx="75" cy="25" r="5"/><circle cx="25" cy="75" r="5"/><circle cx="75" cy="75" r="5"/></svg>');
+    opacity: 0.5;
+}
+
+.contact-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 2.2rem;
+    position: relative;
+    display: inline-block;
+}
+
+.contact-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--secondary-color);
+    border-radius: 3px;
+}
+
+.contact-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+.contact-container {
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    text-align: right;
+}
+
+.company-info {
+    flex: 1;
+    padding: 30px;
+    background-color: #f9f9ff;
+    border-radius: var(--border-radius);
+    border: 1px solid #eee;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.company-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.company-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.company-info h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--secondary-color);
+}
+
+.company-description {
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.contact-method {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.contact-method i {
+    color: var(--secondary-color);
+    font-size: 1.3rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.contact-label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.contact-value {
+    color: var(--dark-color);
+    text-decoration: none;
+    display: block;
+    margin-top: 8px;
+    transition: color 0.3s;
+    line-height: 1.5;
+}
+
+.contact-value:hover {
+    color: var(--secondary-color);
+}
+
+.contact-form {
+    flex: 1;
+    max-width: 600px;
+    padding: 30px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.contact-form:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h3 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+}
+
+.form-select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: var(--dark-color);
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    background-size: 15px;
+}
+
+.form-select:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+}
+
+.contact-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contact-btn:hover {
+    background-color: #3a5bd9;
+    transform: translateY(-2px);
+}
+
+/* تحسينات للجوال */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 30px 20px;
+    }
+    
+    .contact-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .company-info,
+    .contact-form {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* أنماط الـ Popup */
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.popup {
+    background-color: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform: scale(0.9);
+    animation: popIn 0.3s ease forwards;
+}
+
+.popup-content {
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.popup-close:hover {
+    color: #ff6b6b;
+}
+
+.popup-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.popup h3 {
+    color: #242f65;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.popup p {
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.popup-btn {
+    background-color: #4a6bdf;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.popup-btn:hover {
+    background-color: #3a5bd9;
+    transform: translateY(-2px);
+}
+
+.popup-success .popup-icon {
+    color: #28a745;
+}
+
+.popup-error .popup-icon {
+    color: #dc3545;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    from { transform: scale(0.9); }
+    to { transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+    .popup {
+        width: 95%;
+    }
+    
+    .popup-icon {
+        font-size: 50px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* أزرار التواصل المباشر */
+.direct-contact-btn {
+    padding: 8px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.email-btn {
+    background-color: #d4edff;
+    color: #0066cc;
+}
+
+.call-btn {
+    background-color: #e2f8e2;
+    color: #00a300;
+}
+
+.direct-contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.email-btn:hover {
+    background-color: #c2e3ff;
+}
+
+.call-btn:hover {
+    background-color: #d0f0d0;
+}
+
+@media (max-width: 768px) {
+    .direct-contact-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* تحسينات إضافية لقسم التواصل */
+.contact-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+    border: 1px solid rgba(74, 107, 223, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.contact-section:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.05);
+}
+
+.contact-method {
+    transition: all 0.3s ease;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.contact-method:hover {
+    background-color: rgba(74, 107, 223, 0.05);
+    transform: translateX(-5px);
+}
+
+.contact-form {
+    position: relative;
+    background: linear-gradient(to bottom, #ffffff 0%, #f9faff 100%);
+}
+
+.contact-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, var(--secondary-color), var(--gold));
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group label::after {
+    content: '*';
+    color: var(--gold);
+    margin-right: 5px;
+    display: none;
+}
+
+.form-group.required label::after {
+    display: inline;
+}
+
+/* تحسينات للأزرار المباشرة */
+.direct-contact-btn {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.email-btn {
+    background: linear-gradient(to right, #e3f2fd, #bbdefb);
+}
+
+.call-btn {
+    background: linear-gradient(to right, #e8f5e9, #c8e6c9);
+}
+
+.direct-contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* تأثيرات التركيز على حقول الإدخال */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 4px rgba(74, 107, 223, 0.15);
+}
+
+/* رسائل التحقق */
+.validation-message {
+    display: none;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.error-message {
+    display: block;
+    color: #d32f2f;
+    background-color: #fce4ec;
+}
+
+.success-message {
+    display: block;
+    color: #388e3c;
+    background-color: #e8f5e9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* أنماط قسم البطل المحسّن */
+.hero-section {
+    position: relative;
+    height: 90vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23ffffff10"><path d="M30,10 Q50,5 70,10 T90,30 Q95,50 90,70 T70,90 Q50,95 30,90 T10,70 Q5,50 10,30 T30,10Z"/></svg>');
+    background-size: 120px;
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.hero-logo-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.hero-logo {
+    width: 35vw;
+}
+
+.hero-text {
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    line-height: 1.3;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease;
+}
+
+.highlight {
+    color: var(--gold);
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: -1;
+    border-radius: 5px;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease 0.2s forwards;
+    opacity: 0;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease 0.4s forwards;
+    opacity: 0;
+}
+
+.cta-btn {
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.primary-btn {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.primary-btn:hover {
+    background-color: var(--light-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.secondary-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s;
+}
+
+.hero-scroll-indicator:hover {
+    color: white;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-20px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+}
+
+/* تأثيرات للجوال */
+@media (max-width: 768px) {
+    .hero-section {
+        height: auto;
+        padding: 60px 20px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-logo {
+        height: 80px;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

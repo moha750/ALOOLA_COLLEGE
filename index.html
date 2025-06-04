@@ -13,11 +13,6 @@
 
 
 
-
-
-
-
-
 <section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -144,18 +139,18 @@
                     <h3><i class="fas fa-paper-plane"></i> أرسل رسالة</h3>
                     <div class="form-group required">
                         <label for="name">اسمك الكريم</label>
-                        <input type="text" id="name" placeholder="اكتب اسمك هنا..." required aria-label="اسمك">
+                        <input name="name" type="text" id="name" placeholder="اكتب اسمك هنا..." required aria-label="اسمك">
                         <div class="validation-message"></div>
                     </div>
                     <div class="form-group required">
                         <label for="email">بريدك الإلكتروني</label>
-                        <input type="email" id="email" placeholder="example@domain.com" required
+                        <input name="email" type="email" id="email" placeholder="example@domain.com" required
                             aria-label="بريدك الإلكتروني">
                         <div class="validation-message"></div>
                     </div>
                     <div class="form-group required">
                         <label for="subject">موضوع الرسالة</label>
-                        <select id="subject" class="form-select" required aria-label="موضوع الرسالة">
+                        <select name="subject" id="subject" class="form-select" required aria-label="موضوع الرسالة">
                             <option value="" selected disabled>اختر موضوع الرسالة</option>
                             <option value="استفسار">استفسار</option>
                             <option value="اقتراح">اقتراح</option>
@@ -166,7 +161,7 @@
                     </div>
                     <div class="form-group required">
                         <label for="message">رسالتك</label>
-                        <textarea id="message" rows="5" placeholder="اكتب رسالتك هنا..." required
+                        <textarea name="message" id="message" rows="5" placeholder="اكتب رسالتك هنا..." required
                             aria-label="رسالتك"></textarea>
                         <div class="validation-message"></div>
                     </div>

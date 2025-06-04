@@ -256,35 +256,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function submitContactForm(form) {
-        const formData = new FormData(form);
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const nameInput = form.querySelector('#name');
-        const userName = nameInput.value.trim() || 'زائرنا الكريم';
-        
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            try {
-                // هنا يمكنك إضافة كود إرسال البيانات الفعلي
-                console.log('بيانات النموذج:', {
-                    name: nameInput.value,
-                    email: formData.get('email'),
-                    subject: formData.get('subject'),
-                    message: formData.get('message')
-                });
-                
-                showPopup('success', `شكراً ${userName}، تم استلام رسالتك وسنتواصل معك قريباً`);
-                form.reset();
-            } catch (error) {
-                showPopup('error', 'حدث خطأ أثناء إرسال الرسالة: ' + error.message);
-            } finally {
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرسالة';
-                submitBtn.disabled = false;
-            }
-        }, 1500);
-    }
+function submitContactForm(form) {
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const nameInput = form.querySelector('#name');
+    const userName = nameInput.value.trim() || 'زائرنا الكريم';
+
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+    submitBtn.disabled = true;
+
+    // تحضير البيانات للإرسال
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message'),
+        timestamp: new Date().toISOString() // إضافة وقت الإرسال
+    };
+
+    // إرسال البيانات إلى SheetDB
+    fetch('https://sheetdb.io/api/v1/3vr6w42w4kps0', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        showPopup('success', `شكراً ${userName}، تم استلام رسالتك وسنتواصل معك قريباً`);
+        form.reset();
+    })
+    .catch(error => {
+        showPopup('error', 'حدث خطأ أثناء إرسال الرسالة: ' + error.message);
+    })
+    .finally(() => {
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرسالة';
+        submitBtn.disabled = false;
+    });
+}
     
     function setupContactButtons() {
         document.querySelector('.email-btn').addEventListener('click', function(e) {

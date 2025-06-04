@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة تهنئة - الكليات الأولى</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-logo-container">
+            <img src="logo.png" alt="شعار الكليات الأولى" class="hero-logo" loading="lazy">
+        </div>
+        <div class="hero-text">
+            <h1 class="hero-title">عايد أحبابك <span class="highlight">ببطاقات فاخرة</span> من الكليات الأولى</h1>
+            <p class="hero-subtitle">تصميمات احترافية تنقل مشاعركم بأرقى صورة</p>
+            <div class="hero-cta">
+                <a href="#myCanvas" class="cta-btn secondary-btn">
+                    <i class="fas fa-gift"></i> ابدأ التصميم الآن
+                </a>
+                <a href="#contact" class="cta-btn primary-btn">
+                    <i class="fas fa-envelope"></i> تواصل معنا
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+    
+    <!-- الأشكال المتحركة الجديدة -->
+    <div class="hero-shapes">
+        <div class="hero-shape"></div>
+        <div class="hero-shape"></div>
+        <div class="hero-shape"></div>
+        <div class="hero-shape"></div>
+        <div class="hero-shape"></div>
+    </div>
+    
+    <!-- الموجة في الأسفل -->
+    <div class="hero-wave"></div>
+</section>
+
+
+
+
+
+
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-gift"></i> منشئ بطاقات التهنئة</h1>
+            <p class="subtitle">صمم بطاقة تهنئة شخصية في خطوات بسيطة</p>
+        </header>
+
+        <div class="preview-section">
+            <canvas id="myCanvas" width="1080" height="1920"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="textInput"><i class="fas fa-font"></i> أدخل اسم المهنئ:</label>
+                <input type="text" id="textInput" placeholder="اكتب الاسم هنا...">
+            </div>
+
+            <div class="button-group">
+                <button class="btn download-btn" onclick="downloadImage()">
+                    <i class="fas fa-download"></i> تحميل البطاقة
+                </button>
+                <button class="btn share-btn" onclick="shareImage()">
+                    <i class="fas fa-share-alt"></i> مشاركة
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- قسم التواصل المحدث -->
+        <section class="contact-section" id="contact">
+            <div class="contact-pattern"></div>
+            <h2><i class="fas fa-headset"></i> تواصل معنا</h2>
+            <p class="contact-subtitle">لديك استفسار أو اقتراح؟ سنكون سعداء بسماع منك</p>
+
+            <div class="contact-container">
+                <!-- معلومات الشركة -->
+                <div class="company-info">
+                    <h3><i class="fas fa-building"></i> كلية التصاميم الأولى</h3>
+                    <p class="company-description">كلية رائدة في مجال التصميم والإبداع، نقدم حلولاً تعليمية مبتكرة منذ
+                        2010</p>
+
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <span class="contact-label">البريد الإلكتروني:</span>
+                                <a href="mailto:info@aloola.edu.sa" class="contact-value">info@aloola.edu.sa</a>
+                                <button class="direct-contact-btn email-btn" onclick="sendEmail()">
+                                    <i class="fas fa-paper-plane"></i> إرسال بريد
+                                </button>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <span class="contact-label">الجوال:</span>
+                                <a href="tel:+966569852222" class="contact-value">+966 56 985 2222</a>
+                                <button class="direct-contact-btn call-btn" onclick="makeCall()">
+                                    <i class="fas fa-phone"></i> اتصال مباشر
+                                </button>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <span class="contact-label">العنوان:</span>
+                                <span class="contact-value">الأحساء، المبرز شارع الظهران</span>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="contact-label">ساعات العمل:</span>
+                                <span class="contact-value">الأحد - الخميس، 9 صباحًا - 3 مساءً</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نموذج التواصل -->
+                <form class="contact-form" id="contactForm">
+                    <h3><i class="fas fa-paper-plane"></i> أرسل رسالة</h3>
+                    <div class="form-group required">
+                        <label for="name">اسمك الكريم</label>
+                        <input type="text" id="name" placeholder="اكتب اسمك هنا..." required aria-label="اسمك">
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group required">
+                        <label for="email">بريدك الإلكتروني</label>
+                        <input type="email" id="email" placeholder="example@domain.com" required
+                            aria-label="بريدك الإلكتروني">
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group required">
+                        <label for="subject">موضوع الرسالة</label>
+                        <select id="subject" class="form-select" required aria-label="موضوع الرسالة">
+                            <option value="" selected disabled>اختر موضوع الرسالة</option>
+                            <option value="استفسار">استفسار</option>
+                            <option value="اقتراح">اقتراح</option>
+                            <option value="دعم فني">دعم فني</option>
+                            <option value="تعاون">تعاون</option>
+                        </select>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group required">
+                        <label for="message">رسالتك</label>
+                        <textarea id="message" rows="5" placeholder="اكتب رسالتك هنا..." required
+                            aria-label="رسالتك"></textarea>
+                        <div class="validation-message"></div>
+                    </div>
+                    <button type="submit" class="btn contact-btn" aria-label="إرسال الرسالة">
+                        <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                    </button>
+                </form>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+        <footer> 
+            <p>   جميع الحقوق محفوظة للكليات الأولى 2025 © </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

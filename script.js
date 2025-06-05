@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
     const textInput = document.getElementById('textInput');
+    const templateSelect = document.getElementById('templateSelect');
     const contactForm = document.getElementById('contactForm');
     
     // إنشاء عنصر Popup
@@ -10,22 +11,394 @@ document.addEventListener('DOMContentLoaded', function() {
     popupContainer.className = 'popup-container';
     document.body.appendChild(popupContainer);
     
-    // مسار الصورة الخلفية
-    const backgroundImageUrl = 'poster.png';
+    // متغيرات التطبيق
+    let currentTemplate = 'poster-thumb.png';
     let backgroundImage = new Image();
-    
-    // تحميل الصورة
-    backgroundImage.onload = function() {
-        drawCanvas();
+    const templates = {
+        'poster-thumb.png': {
+            name: 'التصميم الأول',
+            textPosition: { x: canvas.width / 2, y: 1036 },
+            textColor: '#242f65',
+            fontSize: 60,
+            fontStyle: 'bold'
+        },
+        'template2-thumb.png': {
+            name: 'التصميم الثاني',
+            textPosition: { x: canvas.width / 2, y: 1600 },
+            textColor: '#ffffff',
+            fontSize: 70,
+            fontStyle: 'normal'
+        },
+        'template3-thumb.png': {
+            name: 'التصميم الثالث',
+            textPosition: { x: canvas.width / 2, y: 1300 },
+            textColor: '#000',
+            fontSize: 70,
+            fontStyle: 'bold'
+        },
+        'template4-thumb.png': {
+            name: 'التصميم الرابع',
+            textPosition: { x: canvas.width / 2, y: 1400 },
+            textColor: '#000',
+            fontSize: 70,
+            fontStyle: 'normal'
+        },
     };
-    backgroundImage.src = backgroundImageUrl;
-    
-    // تهيئة قسم التواصل
-    setupContactForm();
-    setupContactButtons();
-    animateContactSection();
 
-    // وظيفة عرض Popup متطورة
+    // تهيئة التطبيق
+    initApp();
+
+    // وظائف التهيئة
+    function initApp() {
+        loadTemplate(currentTemplate);
+        setupTemplateGallery();
+        setupContactForm();
+        setupContactButtons();
+        animateContactSection();
+        setupEventListeners();
+    }
+
+    function setupEventListeners() {
+        textInput.addEventListener('input', drawCanvas);
+        window.addEventListener('resize', drawCanvas);
+        document.querySelector('.download-btn').addEventListener('click', downloadImage);
+        document.querySelector('.share-btn').addEventListener('click', shareImage);
+        
+        templateSelect.addEventListener('change', function() {
+            const selectedTemplate = this.value;
+            loadTemplate(selectedTemplate);
+            updateSelectedTemplateInGallery(selectedTemplate);
+            showPopup('success', `تم تحميل قالب ${templates[selectedTemplate].name} بنجاح`, null, 2000);
+        });
+    }
+
+    // وظائف إدارة القوالب
+    function loadTemplate(templateUrl) {
+        currentTemplate = templateUrl;
+        backgroundImage = new Image();
+        backgroundImage.onload = function() {
+            drawCanvas();
+        };
+        backgroundImage.src = templateUrl;
+    }
+
+    function setupTemplateGallery() {
+        document.querySelectorAll('.template-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const template = this.getAttribute('data-template');
+                loadTemplate(template);
+                templateSelect.value = template;
+                updateSelectedTemplateInGallery(template);
+                showPopup('success', `تم تحميل قالب ${templates[template].name} بنجاح`, null, 2000);
+            });
+        });
+    }
+
+    function updateSelectedTemplateInGallery(template) {
+        document.querySelectorAll('.template-item').forEach(item => {
+            item.classList.remove('selected-template');
+            if (item.getAttribute('data-template') === template) {
+                item.classList.add('selected-template');
+            }
+        });
+    }
+
+    // وظائف الكانفاس
+    function drawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+        
+        if (textInput.value) {
+            drawText();
+        }
+    }
+
+    function drawText() {
+        const text = textInput.value;
+        const templateConfig = templates[currentTemplate];
+        
+        ctx.font = `${templateConfig.fontStyle} ${templateConfig.fontSize}px font`;
+        ctx.fillStyle = templateConfig.textColor;
+        ctx.textAlign = 'center';
+        
+        // ضبط حجم الخط ليناسب العرض
+        let fontSize = templateConfig.fontSize;
+        const maxWidth = canvas.width * 0.8;
+        let textWidth;
+        
+        do {
+            ctx.font = `${templateConfig.fontStyle} ${fontSize}px font`;
+            textWidth = ctx.measureText(text).width;
+            if (textWidth > maxWidth && fontSize > 20) {
+                fontSize -= 2;
+            }
+        } while (textWidth > maxWidth && fontSize > 20);
+        
+        // تأثير الظل للنصوص الداكنة
+        if (templateConfig.textColor === '#242f65' || templateConfig.textColor === '#000000') {
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+            ctx.shadowBlur = 5;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+        } else {
+            ctx.shadowColor = 'transparent';
+        }
+        
+        ctx.fillText(text, templateConfig.textPosition.x, templateConfig.textPosition.y);
+        ctx.shadowColor = 'transparent';
+    }
+
+    // وظائف تحميل ومشاركة البطاقة
+    function downloadImage() {
+        const textValue = textInput.value.trim();
+        const templateName = templates[currentTemplate].name;
+        const finalText = textValue ? `بطاقة_${templateName}_لـ_${textValue}` : `بطاقة_${templateName}`;
+        const btn = document.querySelector('.download-btn');
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+        btn.disabled = true;
+        
+        setTimeout(() => {
+            try {
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = `${finalText}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showPopup('success', 'تم تحميل البطاقة بنجاح!');
+            } catch (error) {
+                showPopup('error', 'حدث خطأ أثناء تحميل البطاقة: ' + error.message);
+            } finally {
+                btn.innerHTML = '<i class="fas fa-download"></i> تحميل البطاقة';
+                btn.disabled = false;
+            }
+        }, 500);
+    }
+
+    function shareImage() {
+        if (navigator.share) {
+            canvas.toBlob((blob) => {
+                const templateName = templates[currentTemplate].name;
+                const file = new File([blob], `بطاقة_${templateName}.png`, { type: 'image/png' });
+                navigator.share({
+                    title: `بطاقة ${templateName}`,
+                    text: textInput.value ? `بطاقة ${templateName} لـ ${textInput.value}` : `بطاقة ${templateName}`,
+                    files: [file]
+                }).then(() => {
+                    showPopup('success', 'تمت المشاركة بنجاح!');
+                }).catch((error) => {
+                    if (error.name !== 'AbortError') {
+                        showPopup('error', 'حدث خطأ أثناء المشاركة: ' + error.message);
+                    }
+                });
+            }, 'image/png');
+        } else {
+            showSocialShareOptions();
+        }
+    }
+
+    function showSocialShareOptions() {
+        const templateName = templates[currentTemplate].name;
+        const text = textInput.value ? `بطاقة ${templateName} لـ ${textInput.value}` : `بطاقة ${templateName}`;
+        const imageUrl = canvas.toDataURL('image/png');
+        
+        showPopup('info', 'اختر منصة للمشاركة:', [
+            {
+                text: '<i class="fab fa-whatsapp"></i> واتساب',
+                action: () => shareOnWhatsApp(text, imageUrl),
+                class: 'whatsapp-btn'
+            },
+            {
+                text: '<i class="fab fa-twitter"></i> تويتر',
+                action: () => shareOnTwitter(text, imageUrl),
+                class: 'twitter-btn'
+            },
+            {
+                text: '<i class="fab fa-instagram"></i> انستقرام',
+                action: () => shareOnInstagram(text, imageUrl),
+                class: 'instagram-btn'
+            },
+            {
+                text: 'إلغاء',
+                action: () => {},
+                class: 'cancel-btn'
+            }
+        ]);
+    }
+
+    // وظائف مشاركة على المنصات الاجتماعية
+    function shareOnWhatsApp(text, imageUrl) {
+        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+    }
+
+    function shareOnTwitter(text, imageUrl) {
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+    }
+
+    function shareOnInstagram(text, imageUrl) {
+        const url = `https://www.instagram.com/`;
+        window.open(url, '_blank');
+        
+        setTimeout(() => {
+            showPopup('info', 'للمشاركة على انستقرام، يرجى حفظ الصورة أولاً ثم مشاركتها من التطبيق');
+        }, 1000);
+    }
+
+    // وظائف قسم التواصل
+    function setupContactForm() {
+        const requiredFields = contactForm.querySelectorAll('[required]');
+        
+        contactForm.querySelector('#email').addEventListener('input', function() {
+            validateEmailField(this);
+        });
+        
+        requiredFields.forEach(field => {
+            field.addEventListener('blur', function() {
+                validateRequiredField(this);
+            });
+        });
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.classList.add('error');
+                    isValid = false;
+                }
+                
+                if (field.id === 'email' && field.value && !validateEmail(field.value)) {
+                    isValid = false;
+                }
+            });
+            
+            if (!isValid) {
+                showPopup('error', 'الرجاء تعبئة جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            submitContactForm(this);
+        });
+    }
+
+    function validateEmailField(field) {
+        const message = field.nextElementSibling;
+        if (!field.value) {
+            message.textContent = '';
+            return;
+        }
+        
+        if (!validateEmail(field.value)) {
+            field.classList.add('error');
+            message.textContent = 'البريد الإلكتروني غير صحيح';
+            message.className = 'validation-message error-message';
+        } else {
+            field.classList.remove('error');
+            message.textContent = 'البريد الإلكتروني صحيح';
+            message.className = 'validation-message success-message';
+        }
+    }
+
+    function validateRequiredField(field) {
+        const message = field.nextElementSibling;
+        if (!field.value) {
+            field.classList.add('error');
+            message.textContent = 'هذا الحقل مطلوب';
+            message.className = 'validation-message error-message';
+        } else {
+            field.classList.remove('error');
+            message.textContent = '';
+            message.className = 'validation-message';
+        }
+    }
+
+    function submitContactForm(form) {
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const nameInput = form.querySelector('#name');
+        const userName = nameInput.value.trim() || 'زائرنا الكريم';
+
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+        submitBtn.disabled = true;
+
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message'),
+            timestamp: new Date().toISOString()
+        };
+
+        fetch('https://sheetdb.io/api/v1/3vr6w42w4kps0', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            showPopup('success', `شكراً ${userName}، تم استلام رسالتك وسنتواصل معك قريباً`);
+            form.reset();
+        })
+        .catch(error => {
+            showPopup('error', 'حدث خطأ أثناء إرسال الرسالة: ' + error.message);
+        })
+        .finally(() => {
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرسالة';
+            submitBtn.disabled = false;
+        });
+    }
+
+    function setupContactButtons() {
+        document.querySelector('.email-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            showPopup('info', 'جارٍ فتح بريد إلكتروني جديد...', null, 2000);
+            setTimeout(sendEmail, 500);
+        });
+        
+        document.querySelector('.call-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            showPopup('confirm', 'هل تريد الاتصال بالرقم: +966 56 985 2222؟', [
+                {
+                    text: 'إلغاء',
+                    action: () => {},
+                    class: 'cancel-btn'
+                },
+                {
+                    text: 'اتصال',
+                    action: () => makeCall(),
+                    class: 'confirm-btn'
+                }
+            ]);
+        });
+    }
+
+    function animateContactSection() {
+        const contactSection = document.getElementById('contact');
+        contactSection.style.opacity = '0';
+        contactSection.style.transform = 'translateY(20px)';
+        contactSection.style.transition = 'all 0.6s ease';
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    contactSection.style.opacity = '1';
+                    contactSection.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(contactSection);
+    }
+
+    // وظيفة عرض Popup
     function showPopup(type, message, buttons = null, duration = 5000) {
         closePopup();
         
@@ -64,7 +437,6 @@ document.addEventListener('DOMContentLoaded', function() {
         popupContainer.appendChild(popup);
         popupContainer.style.display = 'flex';
         
-        // إضافة أحداث للأزرار المخصصة
         if (buttons && Array.isArray(buttons)) {
             buttons.forEach((btn, index) => {
                 const buttonElem = popup.querySelectorAll('.popup-btn')[index];
@@ -74,19 +446,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         } else {
-            // زر افتراضي
             popup.querySelector('.popup-btn').addEventListener('click', closePopup);
         }
         
-        // إغلاق عند النقر خارج المحتوى
         popupContainer.addEventListener('click', (e) => {
             if (e.target === popupContainer) closePopup();
         });
         
-        // زر الإغلاق
         popup.querySelector('.popup-close').addEventListener('click', closePopup);
         
-        // إغلاق تلقائي للنوافذ غير التأكيدية
         if (duration && type !== 'confirm') {
             setTimeout(closePopup, duration);
         }
@@ -98,254 +466,9 @@ document.addEventListener('DOMContentLoaded', function() {
             popupContainer.removeChild(popupContainer.firstChild);
         }
     }
-    
-    // وظائف الكانفاس
-    function drawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-        
-        if (textInput.value) {
-            drawText();
-        }
-    }
-    
-    function drawText() {
-        const text = textInput.value;
-        ctx.font = 'bold 60px font';
-        ctx.fillStyle = '#242f65';
-        ctx.textAlign = 'center';
-        
-        let fontSize = 50;
-        const textWidth = ctx.measureText(text).width;
-        
-        while (textWidth > canvas.width * 0.9 && fontSize > 20) {
-            fontSize -= 2;
-            ctx.font = `bold ${fontSize}px font`;
-        }
-        
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-        ctx.shadowBlur = 5;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-        
-        ctx.fillText(text, canvas.width / 2, 1036);
-        
-        ctx.shadowColor = 'transparent';
-    }
-    
-    // تحميل الصورة
-    function downloadImage() {
-        const textValue = textInput.value.trim();
-        const finalText = textValue ? `بطاقة تهنئة لـ ${textValue}` : 'بطاقة تهنئة';
-        const btn = document.querySelector('.download-btn');
-        
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
-        btn.disabled = true;
-        
-        setTimeout(() => {
-            try {
-                const dataUrl = canvas.toDataURL('image/png', 1.0);
-                const link = document.createElement('a');
-                link.href = dataUrl;
-                link.download = `${finalText}.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showPopup('success', 'تم تحميل البطاقة بنجاح!');
-            } catch (error) {
-                showPopup('error', 'حدث خطأ أثناء تحميل البطاقة: ' + error.message);
-            } finally {
-                btn.innerHTML = '<i class="fas fa-download"></i> تحميل البطاقة';
-                btn.disabled = false;
-            }
-        }, 500);
-    }
-    
-    // مشاركة الصورة
-    function shareImage() {
-        if (navigator.share) {
-            canvas.toBlob((blob) => {
-                const file = new File([blob], 'تهنئة.png', { type: 'image/png' });
-                navigator.share({
-                    title: 'بطاقة تهنئة',
-                    text: textInput.value ? `بطاقة تهنئة لـ ${textInput.value}` : 'بطاقة تهنئة',
-                    files: [file]
-                }).then(() => {
-                    showPopup('success', 'تمت المشاركة بنجاح!');
-                }).catch((error) => {
-                    if (error.name !== 'AbortError') {
-                        showPopup('error', 'حدث خطأ أثناء المشاركة: ' + error.message);
-                    }
-                });
-            }, 'image/png');
-        } else {
-            showPopup('info', 'لمعاينة خاصية المشاركة، يرجى استخدام متصفح مدعوم مثل Chrome على أندرويد');
-        }
-    }
-    
-    // إعدادات قسم التواصل
-    function setupContactForm() {
-        const requiredFields = contactForm.querySelectorAll('[required]');
-        
-        // التحقق أثناء الكتابة
-        contactForm.querySelector('#email').addEventListener('input', function() {
-            validateEmailField(this);
-        });
-        
-        // التحقق عند فقدان التركيز
-        requiredFields.forEach(field => {
-            field.addEventListener('blur', function() {
-                validateRequiredField(this);
-            });
-        });
-        
-        // إرسال النموذج
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            let isValid = true;
-            requiredFields.forEach(field => {
-                if (!field.value) {
-                    field.classList.add('error');
-                    isValid = false;
-                }
-                
-                if (field.id === 'email' && field.value && !validateEmail(field.value)) {
-                    isValid = false;
-                }
-            });
-            
-            if (!isValid) {
-                showPopup('error', 'الرجاء تعبئة جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            submitContactForm(this);
-        });
-    }
-    
-    function validateEmailField(field) {
-        const message = field.nextElementSibling;
-        if (!field.value) {
-            message.textContent = '';
-            return;
-        }
-        
-        if (!validateEmail(field.value)) {
-            field.classList.add('error');
-            message.textContent = 'البريد الإلكتروني غير صحيح';
-            message.className = 'validation-message error-message';
-        } else {
-            field.classList.remove('error');
-            message.textContent = 'البريد الإلكتروني صحيح';
-            message.className = 'validation-message success-message';
-        }
-    }
-    
-    function validateRequiredField(field) {
-        const message = field.nextElementSibling;
-        if (!field.value) {
-            field.classList.add('error');
-            message.textContent = 'هذا الحقل مطلوب';
-            message.className = 'validation-message error-message';
-        } else {
-            field.classList.remove('error');
-            message.textContent = '';
-            message.className = 'validation-message';
-        }
-    }
-    
-function submitContactForm(form) {
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const nameInput = form.querySelector('#name');
-    const userName = nameInput.value.trim() || 'زائرنا الكريم';
-
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
-    submitBtn.disabled = true;
-
-    // تحضير البيانات للإرسال
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message'),
-        timestamp: new Date().toISOString() // إضافة وقت الإرسال
-    };
-
-    // إرسال البيانات إلى SheetDB
-    fetch('https://sheetdb.io/api/v1/3vr6w42w4kps0', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        showPopup('success', `شكراً ${userName}، تم استلام رسالتك وسنتواصل معك قريباً`);
-        form.reset();
-    })
-    .catch(error => {
-        showPopup('error', 'حدث خطأ أثناء إرسال الرسالة: ' + error.message);
-    })
-    .finally(() => {
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرسالة';
-        submitBtn.disabled = false;
-    });
-}
-    
-    function setupContactButtons() {
-        document.querySelector('.email-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            showPopup('info', 'جارٍ فتح بريد إلكتروني جديد...', null, 2000);
-            setTimeout(sendEmail, 500);
-        });
-        
-        document.querySelector('.call-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            showPopup('confirm', 'هل تريد الاتصال بالرقم: +966 56 985 2222؟', [
-                {
-                    text: 'إلغاء',
-                    action: () => {},
-                    class: 'cancel-btn'
-                },
-                {
-                    text: 'اتصال',
-                    action: () => makeCall(),
-                    class: 'confirm-btn'
-                }
-            ]);
-        });
-    }
-    
-    function animateContactSection() {
-        const contactSection = document.getElementById('contact');
-        contactSection.style.opacity = '0';
-        contactSection.style.transform = 'translateY(20px)';
-        contactSection.style.transition = 'all 0.6s ease';
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    contactSection.style.opacity = '1';
-                    contactSection.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        observer.observe(contactSection);
-    }
-    
-    // الأحداث العامة
-    textInput.addEventListener('input', drawCanvas);
-    window.addEventListener('resize', drawCanvas);
-    document.querySelector('.download-btn').addEventListener('click', downloadImage);
-    document.querySelector('.share-btn').addEventListener('click', shareImage);
 });
 
-// وظائف مساعدة
+// وظائف مساعدة عامة
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -364,26 +487,7 @@ function makeCall() {
     window.location.href = `tel:${phoneNumber}`;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// إضافة تأثير التمرير للسهم
+// تأثير التمرير للسهم
 document.querySelector('.hero-scroll-indicator').addEventListener('click', function() {
     window.scrollTo({
         top: document.querySelector('.container').offsetTop,
@@ -402,9 +506,3 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 observer.observe(heroSection);
-
-
-
-
-
-
